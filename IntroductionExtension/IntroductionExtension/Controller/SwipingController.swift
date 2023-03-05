@@ -9,8 +9,13 @@ import UIKit
 
 final class SwipingController: UICollectionViewController {
     // MARK: - Properties
-    private let imageNames = ["bear_first","heart_second","leaf_third"]
-    private let headerStrings = ["Join us today in our fun and games!","Subscribe and get coupons on our daily events","VIP members sprecial service "]
+    private let pages = [
+        Page(imageName: "bear_first", headerText: "Join us today in our fun and games!"),
+        Page(imageName: "heart_second", headerText: "Subscribe and get coupons on our daily events"),
+        Page(imageName: "leaf_third", headerText: "VIP members sprecial service")
+    ]
+//    private let imageNames = ["bear_first","heart_second","leaf_third"]
+//    private let headerStrings = ["Join us today in our fun and games!","Subscribe and get coupons on our daily events","VIP members sprecial service "]
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,14 +42,14 @@ extension SwipingController{
 // MARK: - UICollectionViewDelegateFlowLayout
 extension SwipingController: UICollectionViewDelegateFlowLayout{
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageNames.count
+        return pages.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! PageCell
-        let imageName = imageNames[indexPath.row]
-        cell.IntroductionLogoImageView.image = UIImage(named: imageName)
-        cell.labelFirst.text = headerStrings[indexPath.item]
+        let page = pages[indexPath.item]
+        cell.IntroductionLogoImageView.image = UIImage(named: page.imageName)
+        cell.labelFirst.text = page.headerText
         return cell
     }
     
