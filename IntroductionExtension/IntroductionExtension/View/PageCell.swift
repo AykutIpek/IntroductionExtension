@@ -13,7 +13,7 @@ final class PageCell: UICollectionViewCell {
     private static var mainPink = UIColor(red: 232/255, green: 68/255, blue: 133/255, alpha: 1)
     private var stackView = UIStackView()
     // MARK: - Properties
-    public let imageView: UIImageView = {
+    public let IntroductionLogoImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "bear_first"))
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -23,7 +23,7 @@ final class PageCell: UICollectionViewCell {
         imageContainer.layer.zPosition = -1
         return imageContainer
     }()
-    private let labelFirst: UILabel = {
+    public let labelFirst: UILabel = {
         let label = UILabel()
         let attributedString = NSMutableAttributedString(string: "Join us today in our fun and games!", attributes: [.foregroundColor: UIColor.label, .font: UIFont.boldSystemFont(ofSize: 18)])
         label.attributedText = attributedString
@@ -87,21 +87,21 @@ extension PageCell{
         backgroundColor = .systemBackground
     }
     private func layout(){
-        addSubview(imageView)
+        addSubview(IntroductionLogoImageView)
         addSubview(labelFirst)
         addSubview(imageContainerView)
         addSubview(attributedText)
         addSubview(attributedTextTwo)
         addSubview(stackView)
         
-        imageView.snp.makeConstraints { make in
+        IntroductionLogoImageView.snp.makeConstraints { make in
             make.width.height.equalTo(imageContainerView).multipliedBy(0.5)
             make.centerX.equalToSuperview()
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(30)
         }
         
         labelFirst.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(120)
+            make.top.equalTo(IntroductionLogoImageView.snp.bottom).offset(120)
             make.centerX.equalToSuperview()
         }
         
