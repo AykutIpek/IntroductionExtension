@@ -13,6 +13,7 @@
 		E932F4A629B3ABBB007E1C05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E932F4A429B3ABBB007E1C05 /* LaunchScreen.storyboard */; };
 		E932F4B129B3B083007E1C05 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E932F4B029B3B083007E1C05 /* SnapKit */; };
 		E949390929B51906005E79F9 /* SwipingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E949390829B51906005E79F9 /* SwipingController.swift */; };
+		E949390C29B520F2005E79F9 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E949390B29B520F2005E79F9 /* PageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		E932F4A529B3ABBB007E1C05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E932F4A729B3ABBB007E1C05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E949390829B51906005E79F9 /* SwipingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingController.swift; sourceTree = "<group>"; };
+		E949390B29B520F2005E79F9 /* PageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		E932F49829B3ABBB007E1C05 /* IntroductionExtension */ = {
 			isa = PBXGroup;
 			children = (
+				E949390A29B520EC005E79F9 /* View */,
 				E932F4AE29B3AF49007E1C05 /* Controller */,
 				E932F4AD29B3AF2D007E1C05 /* Files */,
 			);
@@ -80,6 +83,14 @@
 				E949390829B51906005E79F9 /* SwipingController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		E949390A29B520EC005E79F9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E949390B29B520F2005E79F9 /* PageCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,6 +171,7 @@
 			files = (
 				E932F49E29B3ABBB007E1C05 /* ViewController.swift in Sources */,
 				E932F49A29B3ABBB007E1C05 /* AppDelegate.swift in Sources */,
+				E949390C29B520F2005E79F9 /* PageCell.swift in Sources */,
 				E949390929B51906005E79F9 /* SwipingController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

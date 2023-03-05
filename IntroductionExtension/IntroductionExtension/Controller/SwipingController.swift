@@ -9,7 +9,7 @@ import UIKit
 
 final class SwipingController: UICollectionViewController {
     // MARK: - Properties
-    
+    private let imageNames = ["bear_first","heart_second","leaf_third"]
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,10 +24,33 @@ extension SwipingController{
         layout()
     }
     private func style(){
-        collectionView.backgroundColor = .green
+        collectionView.backgroundColor = .systemBackground
+        collectionView.register(PageCell.self, forCellWithReuseIdentifier: "cellId")
+        collectionView.isPagingEnabled = true
     }
     private func layout(){
         
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
+extension SwipingController: UICollectionViewDelegateFlowLayout{
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageNames.count
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! PageCell
+        let imageName = imageNames[indexPath.row]
+        cell.imageView.image = UIImage(named: imageName)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: view.frame.width, height: view.frame.height)
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+}

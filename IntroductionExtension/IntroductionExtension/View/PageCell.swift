@@ -1,19 +1,19 @@
 //
-//  ViewController.swift
+//  PageCell.swift
 //  IntroductionExtension
 //
-//  Created by aykut ipek on 4.03.2023.
+//  Created by aykut ipek on 5.03.2023.
 //
 
+import Foundation
 import UIKit
-import SnapKit
 
-final class ViewController: UIViewController {
+final class PageCell: UICollectionViewCell {
     // MARK: - UIElements
     private static var mainPink = UIColor(red: 232/255, green: 68/255, blue: 133/255, alpha: 1)
     private var stackView = UIStackView()
     // MARK: - Properties
-    private let imageView: UIImageView = {
+    public let imageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "bear_first"))
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -67,39 +67,37 @@ final class ViewController: UIViewController {
         return pageControl
     }()
     // MARK: - Life Cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
 // MARK: - Helpers
-extension ViewController{
+extension PageCell{
     private func setupUI(){
         style()
         layout()
-        setupBottomControls()
-    }
-    fileprivate func setupBottomControls(){
-        
     }
     private func style(){
-        stackView = UIStackView(arrangedSubviews: [previousButton,pageControl,nextButton])
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
+        backgroundColor = .systemBackground
     }
     private func layout(){
-        view.addSubview(imageView)
-        view.addSubview(labelFirst)
-        view.addSubview(imageContainerView)
-        view.addSubview(attributedText)
-        view.addSubview(attributedTextTwo)
-        view.addSubview(stackView)
+        addSubview(imageView)
+        addSubview(labelFirst)
+        addSubview(imageContainerView)
+        addSubview(attributedText)
+        addSubview(attributedTextTwo)
+        addSubview(stackView)
         
         imageView.snp.makeConstraints { make in
             make.width.height.equalTo(imageContainerView).multipliedBy(0.5)
             make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(30)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(30)
         }
         
         labelFirst.snp.makeConstraints { make in
@@ -124,17 +122,12 @@ extension ViewController{
             make.centerX.equalToSuperview()
 
         }
-//        previousButton.snp.makeConstraints { make in
-//            make.left.equalToSuperview().offset(8)
-//            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-//            make.height.equalTo(40)
-//            make.width.equalTo(80)
-//        }
         stackView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.height.equalTo(60)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }
 }
+
