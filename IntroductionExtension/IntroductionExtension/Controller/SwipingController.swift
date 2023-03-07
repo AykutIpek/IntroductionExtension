@@ -8,20 +8,63 @@
 import UIKit
 
 final class SwipingController: UICollectionViewController {
+    // MARK: - UIElements
+    private var stackView = UIStackView()
+    private static var mainPink = UIColor(red: 232/255, green: 68/255, blue: 133/255, alpha: 1)
     // MARK: - Properties
     private let pages = [
         Page(imageName: "bear_first", headerText: "Join us today in our fun and games!", bodyText: "Are you ready for loads and loads of fun? Don't wait any longer!", bodyTextUnderLine: "We hope to see you in our stores soon."),
         Page(imageName: "heart_second", headerText: "Subscribe and get coupons on our daily events", bodyText: "Get notified of the saving immediately when we announce our website", bodyTextUnderLine: "Make sure to also give us any feedback you have"),
         Page(imageName: "leaf_third", headerText: "VIP members sprecial service", bodyText: "Are you ready for loads and loads of fun? Don't wait any longer!", bodyTextUnderLine: "We hope to see you in our stores soon.")
     ]
-//    private let imageNames = ["bear_first","heart_second","leaf_third"]
-//    private let headerStrings = ["Join us today in our fun and games!","Subscribe and get coupons on our daily events","VIP members sprecial service "]
+    private lazy var previousButton : UIButton = {
+        let button =  UIButton(type: .system)
+        button.setTitle("PREV", for: .normal)
+        button.backgroundColor = .systemBackground
+        button.titleLabel!.font = UIFont.boldSystemFont(ofSize: 14)
+        button.setTitleColor(UIColor.systemGray, for: .normal)
+        button.addTarget(self, action: #selector(handlePreviousPage), for: .touchUpInside)
+        return button
+    }()
+    private lazy var nextButton : UIButton = {
+        let button =  UIButton(type: .system)
+        button.setTitle("NEXT", for: .normal)
+        button.backgroundColor = .systemBackground
+        button.setTitleColor(SwipingController.mainPink, for: .normal)
+        button.titleLabel!.font = UIFont.boldSystemFont(ofSize: 14)
+        button.addTarget(self, action: #selector(handleNextPage), for: .touchUpInside)
+        return button
+    }()
+    private lazy var pageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        pageControl.currentPage = 0
+        pageControl.numberOfPages = pages.count
+        pageControl.pageIndicatorTintColor = .systemGray
+        pageControl.currentPageIndicatorTintColor = SwipingController.mainPink
+        return pageControl
+    }()
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
 }
+// MARK: - Selector
+extension SwipingController{
+    @objc private func handleNextPage(_ sender: UIButton){
+        let nextIndex = min(pageControl.currentPage + 1, pages.count - 1)
+        let indexPath = IndexPath(item: nextIndex, section: 0)
+        pageControl.currentPage = nextIndex
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
+    @objc private func handlePreviousPage(_ sender: UIButton){
+        let nextIndex = max(pageControl.currentPage - 1, 0)
+        let indexPath = IndexPath(item: nextIndex, section: 0)
+        pageControl.currentPage = nextIndex
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
+}
+
 
 // MARK: - Helpers
 extension SwipingController{
@@ -33,9 +76,20 @@ extension SwipingController{
         collectionView.backgroundColor = .systemBackground
         collectionView.register(PageCell.self, forCellWithReuseIdentifier: "cellId")
         collectionView.isPagingEnabled = true
+        
+        stackView = UIStackView(arrangedSubviews: [previousButton,pageControl,nextButton])
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
     }
     private func layout(){
+        view.addSubview(stackView)
         
+        stackView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.height.equalTo(60)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
     }
 }
 
@@ -49,8 +103,6 @@ extension SwipingController: UICollectionViewDelegateFlowLayout{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! PageCell
         let page = pages[indexPath.item]
         cell.page = page
-//        cell.IntroductionLogoImageView.image = UIImage(named: page.imageName)
-//        cell.labelFirst.text = page.headerText
         return cell
     }
     
@@ -60,5 +112,10 @@ extension SwipingController: UICollectionViewDelegateFlowLayout{
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+    
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let x = targetContentOffset.pointee.x
+        pageControl.currentPage = Int(x / view.frame.width)
     }
 }
