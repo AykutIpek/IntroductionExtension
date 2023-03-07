@@ -124,12 +124,6 @@ extension ViewController{
             make.centerX.equalToSuperview()
 
         }
-//        previousButton.snp.makeConstraints { make in
-//            make.left.equalToSuperview().offset(8)
-//            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-//            make.height.equalTo(40)
-//            make.width.equalTo(80)
-//        }
         stackView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalToSuperview()

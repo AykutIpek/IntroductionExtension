@@ -10,10 +10,22 @@ import UIKit
 
 final class PageCell: UICollectionViewCell {
     // MARK: - UIElements
+    public var page: Page?{
+        didSet{
+            guard let unwrappedPage = page else {return}
+            IntroductionLogoImageView.image = UIImage(named: unwrappedPage.imageName)
+            let attributedString = NSMutableAttributedString(string: unwrappedPage.headerText, attributes: [.foregroundColor: UIColor.label, .font: UIFont.boldSystemFont(ofSize: 18)])
+            labelFirst.attributedText = attributedString
+            let attributed = NSMutableAttributedString(string: "\(unwrappedPage.bodyText)", attributes: [.foregroundColor: UIColor.systemGray, .font: UIFont.systemFont(ofSize: 13)])
+            attributedText.attributedText = attributed
+            let attributedText = NSMutableAttributedString(string: "\(unwrappedPage.bodyTextUnderLine)", attributes: [.foregroundColor: UIColor.systemGray, .font: UIFont.systemFont(ofSize: 13)])
+            attributedTextTwo.attributedText = attributedText
+        }
+    }
     private static var mainPink = UIColor(red: 232/255, green: 68/255, blue: 133/255, alpha: 1)
     private var stackView = UIStackView()
     // MARK: - Properties
-    public let IntroductionLogoImageView: UIImageView = {
+    private let IntroductionLogoImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "bear_first"))
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -23,23 +35,23 @@ final class PageCell: UICollectionViewCell {
         imageContainer.layer.zPosition = -1
         return imageContainer
     }()
-    public let labelFirst: UILabel = {
+    private let labelFirst: UILabel = {
         let label = UILabel()
-        let attributedString = NSMutableAttributedString(string: "Join us today in our fun and games!", attributes: [.foregroundColor: UIColor.label, .font: UIFont.boldSystemFont(ofSize: 18)])
-        label.attributedText = attributedString
+//        let attributedString = NSMutableAttributedString(string: "Join us today in our fun and games!", attributes: [.foregroundColor: UIColor.label, .font: UIFont.boldSystemFont(ofSize: 18)])
+//        label.attributedText = attributedString
         // Are you ready for loads and loads of fun? Don't wait any longer! We hope to see you in our stores soon.
         return label
     }()
     private let attributedText: UILabel = {
         let textView = UILabel()
-        let attributed = NSMutableAttributedString(string: "Are you ready for loads and loads of fun? Don't wait any longer!", attributes: [.foregroundColor: UIColor.systemGray, .font: UIFont.systemFont(ofSize: 13)])
-        textView.attributedText = attributed
+//        let attributed = NSMutableAttributedString(string: "Are you ready for loads and loads of fun? Don't wait any longer!", attributes: [.foregroundColor: UIColor.systemGray, .font: UIFont.systemFont(ofSize: 13)])
+//        textView.attributedText = attributed
         return textView
     }()
     private let attributedTextTwo: UILabel = {
         let label = UILabel()
-        let attributed = NSMutableAttributedString(string: "We hope to see you in our stores soon.", attributes: [.foregroundColor: UIColor.systemGray, .font: UIFont.systemFont(ofSize: 13)])
-        label.attributedText = attributed
+//        let attributed = NSMutableAttributedString(string: "We hope to see you in our stores soon.", attributes: [.foregroundColor: UIColor.systemGray, .font: UIFont.systemFont(ofSize: 13)])
+//        label.attributedText = attributed
         return label
     }()
     private let previousButton : UIButton = {
